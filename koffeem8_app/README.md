@@ -1,4 +1,4 @@
-# koffeem8_app
+# koffee_m8_alpha_1
 
 A new Flutter application.
 

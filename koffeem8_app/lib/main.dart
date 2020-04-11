@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
+import 'InputPage.dart';
 
-// Starting point for all of our flutter apps
-void main() {
-  runApp(MaterialApp(
-    home: Scaffold(
-      backgroundColor: Colors.greenAccent,
-      appBar: AppBar(
-        title: Text('Köffem8'),
-        backgroundColor: Colors.greenAccent,
+void main() => runApp(KoffeeCalc());
+
+class KoffeeCalc extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData.dark().copyWith(
+        primaryColor: Colors.green[800],
+        scaffoldBackgroundColor: Colors.green[800],
       ),
-      body: Center(
-        child: Image(
-          image: NetworkImage('https://i.imgur.com/lp9zM5K.png'),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: Text('Lets Brew!'),
-        backgroundColor: Colors.red,
-      ),
-    ),
-  ));
+      home: InputPage(),
+    );
+  }
 }
