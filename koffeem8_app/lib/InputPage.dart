@@ -111,6 +111,9 @@ class _InputPageState extends State<InputPage> {
                 width: 205.0,
                 height: 100.0,
                 child: FlatButton(
+                    onPressed: () {
+                      print('Reset button pressed!');
+                    },
                     child: Text('Reset',
                         style: TextStyle(fontSize: 40.0, color: Colors.white))),
               ),
