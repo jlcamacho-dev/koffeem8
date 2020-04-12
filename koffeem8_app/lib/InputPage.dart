@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:async';
 
 class InputPage extends StatefulWidget {
   @override
@@ -16,6 +17,29 @@ class _InputPageState extends State<InputPage> {
   var _txtCoffee = TextEditingController();
   var _txtWater = TextEditingController();
   var _txtTimer = TextEditingController();
+
+  // logic for timer begins here
+  Timer _timer; // timer object
+  int _start = 120; // default time in seconds
+  var _bState = 'Start'; // status for start /time button
+
+  void startTimer({String status = 'nil'}) {
+    const oneSec = const Duration(seconds: 1);
+    _timer = new Timer.periodic(
+      oneSec,
+      (Timer timer) => setState(
+        () {
+          if (_start < 1 || status == 'Stop') {
+            timer.cancel();
+            _bState = 'Start';
+            _start = 120;
+          } else {
+            _start = _start - 1;
+          }
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +110,27 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: ReusableCard(),
+                  child: ReusableCard(
+                    cardChild: Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 40.0,
+                        ),
+                        Container(
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Text(
+                              formatHHMMSS(_start),
+                              style: TextStyle(
+                                fontSize: 40.0,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -100,10 +144,17 @@ class _InputPageState extends State<InputPage> {
                 child: FlatButton(
                     onPressed: () {
                       setState(() {
-                        _sState = _sState == 'Start' ? 'Stop' : 'Start';
+//                        _sState = _sState == 'Start' ? 'Stop' : 'Start';
+                        if (_bState == 'Start') {
+                          startTimer();
+                          _bState = 'Stop';
+                        } else if (_bState == 'Stop') {
+                          _timer.cancel();
+                          _bState = 'Start';
+                        }
                       });
                     },
-                    child: Text(_sState.toString(),
+                    child: Text(_bState.toString(),
                         style: TextStyle(fontSize: 40.0, color: Colors.white))),
               ),
               Container(
@@ -112,7 +163,11 @@ class _InputPageState extends State<InputPage> {
                 height: 100.0,
                 child: FlatButton(
                     onPressed: () {
-                      print('Reset button pressed!');
+                      setState(() {
+                        _timer.cancel();
+                        _start = 120;
+                        _bState = 'Start';
+                      });
                     },
                     child: Text('Reset',
                         style: TextStyle(fontSize: 40.0, color: Colors.white))),
@@ -142,6 +197,23 @@ class ReusableCard extends StatelessWidget {
       ),
     );
   }
+}
+
+// formats seconds into a Hours/Minutes/Seconds string
+String formatHHMMSS(int seconds) {
+  int hours = (seconds / 3600).truncate();
+  seconds = (seconds % 3600).truncate();
+  int minutes = (seconds / 60).truncate();
+
+  String hoursStr = (hours).toString().padLeft(2, '0');
+  String minutesStr = (minutes).toString().padLeft(2, '0');
+  String secondsStr = (seconds % 60).toString().padLeft(2, '0');
+
+  if (hours == 0) {
+    return "$minutesStr:$secondsStr";
+  }
+
+  return "$hoursStr:$minutesStr:$secondsStr";
 }
 
 //Container(
