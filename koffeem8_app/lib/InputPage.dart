@@ -8,8 +8,11 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   var _sState = 'Start';
-  var _gCoffee = '0.00';
-  var _gWater = '0.00';
+  double _gCoffee;
+  double _gWater;
+  double _ratio = 0.0625;
+  var _txtCoffee = TextEditingController();
+  var _txtWater = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +43,11 @@ class _InputPageState extends State<InputPage> {
                     cardChild: Column(
                       children: <Widget>[
                         TextFormField(
+                          controller: _txtCoffee,
                           onChanged: (text) {
-                            print("First text field: $text");
+                            _gCoffee = double.parse(text);
+                            _gWater = _gCoffee * _ratio;
+                            _txtWater.text = _gWater.toString();
                           },
                           decoration:
                               InputDecoration(labelText: 'grams of coffee'),
@@ -57,6 +63,7 @@ class _InputPageState extends State<InputPage> {
                     cardChild: Column(
                       children: <Widget>[
                         TextField(
+                          controller: _txtWater,
                           onChanged: (String str) {
                             print(str);
                           },
@@ -96,6 +103,9 @@ class _InputPageState extends State<InputPage> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
       ),
     );
   }
