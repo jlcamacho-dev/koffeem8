@@ -7,12 +7,15 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  var _sState = 'Start';
+  String _sStateStart = 'Start';
+  String _sStateStop = 'Stop';
+  String _sState = 'Start';
   double _gCoffee;
   double _gWater;
   double _ratio = 0.0625;
   var _txtCoffee = TextEditingController();
   var _txtWater = TextEditingController();
+  var _txtTimer = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -88,19 +91,30 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          Container(
-            color: Colors.teal,
-            margin: EdgeInsets.only(top: 10.0),
-            width: double.infinity,
-            height: 100.0,
-            child: Center(
-              child: Text(
-                _sState,
-                style: TextStyle(
-                  fontSize: 40.0,
-                ),
+          Row(
+            children: <Widget>[
+              Container(
+                color: Colors.teal,
+                width: 205.0,
+                height: 100.0,
+                child: FlatButton(
+                    onPressed: () {
+                      setState(() {
+                        _sState = _sState == 'Start' ? 'Stop' : 'Start';
+                      });
+                    },
+                    child: Text(_sState.toString(),
+                        style: TextStyle(fontSize: 40.0, color: Colors.white))),
               ),
-            ),
+              Container(
+                color: Colors.teal,
+                width: 205.0,
+                height: 100.0,
+                child: FlatButton(
+                    child: Text('Reset',
+                        style: TextStyle(fontSize: 40.0, color: Colors.white))),
+              ),
+            ],
           ),
         ],
       ),
@@ -127,28 +141,24 @@ class ReusableCard extends StatelessWidget {
   }
 }
 
-// Custom Form Widget definition
-class MyCustomForm extends StatefulWidget {
-  @override
-  _MyCustomFormState createState() => _MyCustomFormState();
-}
-
-// Corresponding State class
-// This class holds the data related to the form
-class _MyCustomFormState extends State<MyCustomForm> {
-  // Create a text controller and use it to retrieve the current value
-  // of the TextFeild
-  final myController = TextEditingController();
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed
-    myController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
+//Container(
+//color: Colors.teal,
+//margin: EdgeInsets.only(top: 10.0),
+//width: double.infinity,
+//height: 100.0,
+//child: FlatButton(
+//onPressed: () {
+//setState(() {
+//_sState = _sState == 'Start' ? 'Stop' : 'Start';
+//});
+//},
+//child: Center(
+//child: Text(
+//_sState.toString(),
+//style: TextStyle(
+//fontSize: 40.0,
+//),
+//),
+//),
+//),
+//),
