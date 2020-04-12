@@ -1,4 +1,4 @@
-package com.luiscamacho.koffee_m8_alpha_1
+package com.luiscamacho.koffeem8_app
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

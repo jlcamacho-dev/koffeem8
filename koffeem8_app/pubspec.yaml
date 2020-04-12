@@ -1,4 +1,4 @@
-name: koffee_m8_alpha_1
+name: koffeem8_app
 description: A new Flutter application.
 
 # The following defines the version and build number for your application.
@@ -17,7 +17,6 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  slide_countdown_clock: ^1.0.3
   flutter:
     sdk: flutter
 
