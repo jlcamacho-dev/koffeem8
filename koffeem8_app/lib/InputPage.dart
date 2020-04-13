@@ -18,6 +18,9 @@ class _InputPageState extends State<InputPage> {
   var _txtWater = TextEditingController();
   var _txtTimer = TextEditingController();
 
+  // control for image
+  int _bNum = 2;
+
   // variable for dropdown menu
   String dropdownValue = '1:16';
 
@@ -57,7 +60,18 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: ReusableCard(),
+                  child: ReusableCard(
+                    cardChild: Column(
+                      children: <Widget>[
+                        Center(
+                          child: Image(
+                            image: AssetImage('images/BrewMethod$_bNum.png'),
+                            height: 125.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 Expanded(
                   child: ReusableCard(
