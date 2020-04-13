@@ -19,7 +19,7 @@ class _InputPageState extends State<InputPage> {
   var _txtTimer = TextEditingController();
 
   // control for image
-  int _bNum = 2;
+  int _bNum = 1;
 
   // variable for dropdown menu
   String dropdownValue = '1:16';
@@ -63,10 +63,20 @@ class _InputPageState extends State<InputPage> {
                   child: ReusableCard(
                     cardChild: Column(
                       children: <Widget>[
-                        Center(
-                          child: Image(
-                            image: AssetImage('images/BrewMethod$_bNum.png'),
-                            height: 125.0,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _bNum += 1;
+                              if (_bNum == 3) {
+                                _bNum = 1;
+                              }
+                            });
+                          },
+                          child: Center(
+                            child: Image(
+                              image: AssetImage('images/BrewMethod$_bNum.png'),
+                              height: 125.0,
+                            ),
                           ),
                         ),
                       ],
