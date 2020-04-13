@@ -26,7 +26,7 @@ class _InputPageState extends State<InputPage> {
 
   // logic for timer begins here
   Timer _timer; // timer object
-  int _start = 120; // default time in seconds
+  int _start = 300; // default time in seconds
   var _bState = 'Start'; // status for start /time button
 
   void startTimer({String status = 'nil'}) {
@@ -70,6 +70,10 @@ class _InputPageState extends State<InputPage> {
                               if (_bNum == 3) {
                                 _bNum = 1;
                               }
+                              dropdownValue =
+                                  _bNum == 1 ? '1:15' : dropdownValue;
+                              dropdownValue =
+                                  _bNum == 2 ? '1:17' : dropdownValue;
                             });
                           },
                           child: Center(
@@ -87,40 +91,60 @@ class _InputPageState extends State<InputPage> {
                   child: ReusableCard(
                     cardChild: Column(
                       children: <Widget>[
+                        SizedBox(
+                          height: 10.0,
+                        ),
                         Container(
-                          //dropdown menu goes here
-                          child: DropdownButton<String>(
-                            value: dropdownValue,
-                            icon: Icon(Icons.arrow_downward),
-                            iconSize: 24,
-                            elevation: 16,
-                            style: TextStyle(color: Colors.deepPurple),
-                            underline: Container(
-                              height: 2,
-                              color: Colors.deepPurpleAccent,
+                          child: Text(
+                            'Ratio',
+                            style: TextStyle(
+                              fontSize: 20.0,
                             ),
-                            onChanged: (String newValue) {
-                              setState(() {
-                                dropdownValue = newValue;
-                                print(dropdownValue);
-                              });
-                            },
-                            items: <String>[
-                              '1:12',
-                              '1:13',
-                              '1:14',
-                              '1:15',
-                              '1:16',
-                              '1:17',
-                              '1:18',
-                              '1:19',
-                              '1:20'
-                            ].map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
+                          ),
+                        ),
+                        Container(
+                          height: 80.0,
+                          width: 100.0,
+                          //dropdown menu goes here
+                          child: Center(
+                            child: DropdownButton<String>(
+                              value: dropdownValue,
+                              icon: Icon(Icons.arrow_downward),
+                              iconSize: 24,
+                              elevation: 16,
+                              style: TextStyle(color: Colors.deepPurple),
+                              underline: Container(
+                                height: 2,
+                                color: Colors.deepPurpleAccent,
+                              ),
+                              onChanged: (String newValue) {
+                                setState(() {
+                                  dropdownValue = newValue;
+                                  print(dropdownValue);
+                                });
+                              },
+                              items: <String>[
+                                '1:12',
+                                '1:13',
+                                '1:14',
+                                '1:15',
+                                '1:16',
+                                '1:17',
+                                '1:18',
+                                '1:19',
+                                '1:20'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(
+                                      fontSize: 20.0,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
                           ),
                         ),
                       ],
@@ -137,18 +161,24 @@ class _InputPageState extends State<InputPage> {
                   child: ReusableCard(
                     cardChild: Column(
                       children: <Widget>[
-                        TextFormField(
-                          controller: _txtCoffee,
-                          onChanged: (text) {
-                            _gCoffee = double.parse(text);
-                            _ratio = strToNum(dropdownValue);
-                            _gWater = _gCoffee * _ratio;
-                            _txtWater.text = _gWater.toStringAsFixed(2);
-                          },
-                          decoration:
-                              InputDecoration(labelText: 'grams of coffee'),
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: true),
+                        Container(
+                          height: 120.0,
+                          width: 100.0,
+                          child: Center(
+                            child: TextField(
+                              controller: _txtCoffee,
+                              onChanged: (text) {
+                                _gCoffee = double.parse(text);
+                                _ratio = strToNum(dropdownValue);
+                                _gWater = _gCoffee * _ratio;
+                                _txtWater.text = _gWater.toStringAsFixed(2);
+                              },
+                              decoration:
+                                  InputDecoration(labelText: 'Coffee (g)'),
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -158,18 +188,24 @@ class _InputPageState extends State<InputPage> {
                   child: ReusableCard(
                     cardChild: Column(
                       children: <Widget>[
-                        TextField(
-                          controller: _txtWater,
-                          onChanged: (text) {
-                            _gWater = double.parse(text);
-                            _ratio = strToNum(dropdownValue);
-                            _gCoffee = _gWater / _ratio;
-                            _txtCoffee.text = _gCoffee.toStringAsFixed(2);
-                          },
-                          decoration:
-                              InputDecoration(labelText: 'grams of water'),
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: true),
+                        Container(
+                          height: 120.0,
+                          width: 100.0,
+                          child: Center(
+                            child: TextField(
+                              controller: _txtWater,
+                              onChanged: (text) {
+                                _gWater = double.parse(text);
+                                _ratio = strToNum(dropdownValue);
+                                _gCoffee = _gWater / _ratio;
+                                _txtCoffee.text = _gCoffee.toStringAsFixed(2);
+                              },
+                              decoration:
+                                  InputDecoration(labelText: 'Water (g)'),
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -240,7 +276,7 @@ class _InputPageState extends State<InputPage> {
                     onPressed: () {
                       setState(() {
                         _timer.cancel();
-                        _start = 120;
+                        _start = 300;
                         _bState = 'Start';
                       });
                     },
