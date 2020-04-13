@@ -194,11 +194,14 @@ class _InputPageState extends State<InputPage> {
                             child: Text(
                               formatHHMMSS(_start),
                               style: TextStyle(
-                                fontSize: 40.0,
+                                fontSize: 60.0,
                                 color: Colors.white,
                               ),
                             ),
                           ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
                         ),
                       ],
                     ),
