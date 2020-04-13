@@ -171,6 +171,7 @@ class _InputPageState extends State<InputPage> {
                                 _gCoffee = double.parse(text);
                                 _ratio = strToNum(dropdownValue);
                                 _gWater = _gCoffee * _ratio;
+                                _gWater = _gWater.abs();
                                 _txtWater.text = _gWater.toStringAsFixed(2);
                               },
                               decoration:
@@ -198,6 +199,7 @@ class _InputPageState extends State<InputPage> {
                                 _gWater = double.parse(text);
                                 _ratio = strToNum(dropdownValue);
                                 _gCoffee = _gWater / _ratio;
+                                _gCoffee = _gCoffee.abs();
                                 _txtCoffee.text = _gCoffee.toStringAsFixed(2);
                               },
                               decoration:
