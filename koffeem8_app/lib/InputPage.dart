@@ -13,10 +13,13 @@ class _InputPageState extends State<InputPage> {
   String _sState = 'Start';
   double _gCoffee;
   double _gWater;
-  double _ratio = 0.0625;
+  var _ratio = 16.0;
   var _txtCoffee = TextEditingController();
   var _txtWater = TextEditingController();
   var _txtTimer = TextEditingController();
+
+  // variable for dropdown menu
+  String dropdownValue = '1:16';
 
   // logic for timer begins here
   Timer _timer; // timer object
@@ -57,7 +60,48 @@ class _InputPageState extends State<InputPage> {
                   child: ReusableCard(),
                 ),
                 Expanded(
-                  child: ReusableCard(),
+                  child: ReusableCard(
+                    cardChild: Column(
+                      children: <Widget>[
+                        Container(
+                          //dropdown menu goes here
+                          child: DropdownButton<String>(
+                            value: dropdownValue,
+                            icon: Icon(Icons.arrow_downward),
+                            iconSize: 24,
+                            elevation: 16,
+                            style: TextStyle(color: Colors.deepPurple),
+                            underline: Container(
+                              height: 2,
+                              color: Colors.deepPurpleAccent,
+                            ),
+                            onChanged: (String newValue) {
+                              setState(() {
+                                dropdownValue = newValue;
+                                print(dropdownValue);
+                              });
+                            },
+                            items: <String>[
+                              '1:12',
+                              '1:13',
+                              '1:14',
+                              '1:15',
+                              '1:16',
+                              '1:17',
+                              '1:18',
+                              '1:19',
+                              '1:20'
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 )
               ],
             ),
@@ -73,8 +117,9 @@ class _InputPageState extends State<InputPage> {
                           controller: _txtCoffee,
                           onChanged: (text) {
                             _gCoffee = double.parse(text);
+                            _ratio = strToNum(dropdownValue);
                             _gWater = _gCoffee * _ratio;
-                            _txtWater.text = _gWater.toString();
+                            _txtWater.text = _gWater.toStringAsFixed(2);
                           },
                           decoration:
                               InputDecoration(labelText: 'grams of coffee'),
@@ -91,8 +136,11 @@ class _InputPageState extends State<InputPage> {
                       children: <Widget>[
                         TextField(
                           controller: _txtWater,
-                          onChanged: (String str) {
-                            print(str);
+                          onChanged: (text) {
+                            _gWater = double.parse(text);
+                            _ratio = strToNum(dropdownValue);
+                            _gCoffee = _gWater / _ratio;
+                            _txtCoffee.text = _gCoffee.toStringAsFixed(2);
                           },
                           decoration:
                               InputDecoration(labelText: 'grams of water'),
@@ -214,6 +262,19 @@ String formatHHMMSS(int seconds) {
   }
 
   return "$hoursStr:$minutesStr:$secondsStr";
+}
+
+// method to convert selected ratio to a double
+double strToNum(String sVal) {
+  String accum = '';
+  for (int i = 0; i < sVal.length; i++) {
+    if (sVal[i] == ':') {
+      accum += sVal[i + 1];
+      accum += sVal[i + 2];
+    }
+  }
+  var nRatio = double.parse(accum);
+  return nRatio;
 }
 
 //Container(
