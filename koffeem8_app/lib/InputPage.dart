@@ -370,11 +370,12 @@ double strToNum(String sVal) {
 String brewGuide(int tElapsed, int method, [double _gco = 0, double _gwa = 0]) {
   double _ib = 2 * _gco;
   double _rm = _gwa - _ib;
+  String _rms = _rm.toStringAsFixed(2);
   if (method == 1) {
     if (tElapsed <= 30) {
       return 'Bloom - Pour $_ib g of water';
     } else if (tElapsed <= 60) {
-      return 'Pour reaminin water - $_rm g';
+      return 'Pour reaminin water - $_rms g';
     } else if (tElapsed <= 270) {
       return 'Let it steep!';
     } else if (tElapsed <= 300) {
