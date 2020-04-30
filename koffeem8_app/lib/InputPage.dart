@@ -171,9 +171,13 @@ class _InputPageState extends State<InputPage> {
                       children: <Widget>[
                         Container(
                           height: 120.0,
-                          width: 100.0,
+                          width: 135.0,
                           child: Center(
                             child: TextField(
+                              style: TextStyle(
+                                fontSize: 30.0,
+                              ),
+                              textAlign: TextAlign.center,
                               controller: _txtCoffee,
                               onChanged: (text) {
                                 _gCoffee = double.parse(text);
@@ -199,9 +203,13 @@ class _InputPageState extends State<InputPage> {
                       children: <Widget>[
                         Container(
                           height: 120.0,
-                          width: 100.0,
+                          width: 130.0,
                           child: Center(
                             child: TextField(
+                              style: TextStyle(
+                                fontSize: 30.0,
+                              ),
+                              textAlign: TextAlign.center,
                               controller: _txtWater,
                               onChanged: (text) {
                                 _gWater = double.parse(text);
