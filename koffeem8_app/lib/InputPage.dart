@@ -100,7 +100,7 @@ class _InputPageState extends State<InputPage> {
                     cardChild: Column(
                       children: <Widget>[
                         SizedBox(
-                          height: 10.0,
+                          height: 30.0,
                         ),
                         Container(
                           child: Text(
@@ -150,7 +150,7 @@ class _InputPageState extends State<InputPage> {
                                   child: Text(
                                     value,
                                     style: TextStyle(
-                                      fontSize: 20.0,
+                                      fontSize: 30.0,
                                     ),
                                   ),
                                 );
