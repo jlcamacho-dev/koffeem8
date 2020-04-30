@@ -13,10 +13,14 @@ class _InputPageState extends State<InputPage> {
   String _sState = 'Start';
   double _gCoffee;
   double _gWater;
+  int tCounter = 0;
   var _ratio = 16.0;
   var _txtCoffee = TextEditingController();
   var _txtWater = TextEditingController();
   var _txtTimer = TextEditingController();
+
+  // variable to walk through the brewing process
+  var tempStr = 'Lets Brew!';
 
   // control for image
   int _bNum = 1;
@@ -38,9 +42,11 @@ class _InputPageState extends State<InputPage> {
           if (_start < 1 || status == 'Stop') {
             timer.cancel();
             _bState = 'Start';
-            _start = 120;
+            _start = 300;
           } else {
             _start = _start - 1;
+            tCounter += 1;
+            tempStr = brewGuide(tCounter, _bNum, _gCoffee, _gWater);
           }
         },
       ),
@@ -67,13 +73,15 @@ class _InputPageState extends State<InputPage> {
                           onTap: () {
                             setState(() {
                               _bNum += 1;
-                              if (_bNum == 3) {
+                              if (_bNum == 4) {
                                 _bNum = 1;
                               }
                               dropdownValue =
                                   _bNum == 1 ? '1:15' : dropdownValue;
                               dropdownValue =
                                   _bNum == 2 ? '1:17' : dropdownValue;
+                              dropdownValue =
+                                  _bNum == 3 ? '1:16' : dropdownValue;
                             });
                           },
                           child: Center(
@@ -224,7 +232,7 @@ class _InputPageState extends State<InputPage> {
                     cardChild: Column(
                       children: <Widget>[
                         SizedBox(
-                          height: 40.0,
+                          height: 20.0,
                         ),
                         Container(
                           child: Align(
@@ -239,7 +247,11 @@ class _InputPageState extends State<InputPage> {
                           ),
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: 40.0,
+                          child: Text(
+                            '$tempStr',
+                            style: TextStyle(fontSize: 20),
+                          ),
                         ),
                       ],
                     ),
@@ -251,7 +263,7 @@ class _InputPageState extends State<InputPage> {
           Row(
             children: <Widget>[
               Container(
-                color: Colors.teal,
+                color: Colors.green,
                 width: 205.0,
                 height: 100.0,
                 child: FlatButton(
@@ -271,7 +283,7 @@ class _InputPageState extends State<InputPage> {
                         style: TextStyle(fontSize: 40.0, color: Colors.white))),
               ),
               Container(
-                color: Colors.teal,
+                color: Colors.red,
                 width: 205.0,
                 height: 100.0,
                 child: FlatButton(
@@ -280,6 +292,8 @@ class _InputPageState extends State<InputPage> {
                         _timer.cancel();
                         _start = 300;
                         _bState = 'Start';
+                        tCounter = 0;
+                        tempStr = 'Lets Brew!';
                       });
                     },
                     child: Text('Reset',
@@ -305,7 +319,7 @@ class ReusableCard extends StatelessWidget {
       child: cardChild,
       margin: EdgeInsets.all(15.0),
       decoration: BoxDecoration(
-        color: Colors.green[500],
+        color: Colors.lightGreen,
         borderRadius: BorderRadius.circular(10.0),
       ),
     );
@@ -340,6 +354,22 @@ double strToNum(String sVal) {
   }
   var nRatio = double.parse(accum);
   return nRatio;
+}
+
+String brewGuide(int tElapsed, int method, [double _gco = 0, double _gwa = 0]) {
+  double _ib = 2 * _gco;
+  double _rm = _gwa - _ib;
+  if (method == 1) {
+    if (tElapsed <= 30) {
+      return 'Bloom - Pour $_ib g of water';
+    } else if (tElapsed <= 60) {
+      return 'Pour reaminin water - $_rm g';
+    } else if (tElapsed <= 270) {
+      return 'Let it steep!';
+    } else if (tElapsed <= 300) {
+      return 'Plunge and Enjoy!';
+    }
+  }
 }
 
 //Container(

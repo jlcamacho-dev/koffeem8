@@ -8,8 +8,8 @@ class KoffeeCalc extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark().copyWith(
-        primaryColor: Colors.green[800],
-        scaffoldBackgroundColor: Colors.green[800],
+        primaryColor: Colors.blue,
+        scaffoldBackgroundColor: Colors.green[600],
       ),
       home: InputPage(),
     );
