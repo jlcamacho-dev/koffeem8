@@ -111,7 +111,7 @@ class _InputPageState extends State<InputPage> {
                           ),
                         ),
                         Container(
-                          height: 80.0,
+                          height: 70.0,
                           width: 100.0,
                           //dropdown menu goes here
                           child: Center(
@@ -120,9 +120,12 @@ class _InputPageState extends State<InputPage> {
                               icon: Icon(Icons.arrow_downward),
                               iconSize: 24,
                               elevation: 16,
-                              style: TextStyle(color: Colors.deepPurple),
+                              style: TextStyle(
+                                color: Colors.deepPurple,
+                                fontSize: 35,
+                              ),
                               underline: Container(
-                                height: 2,
+                                height: 3,
                                 color: Colors.deepPurpleAccent,
                               ),
                               onChanged: (String newValue) {
